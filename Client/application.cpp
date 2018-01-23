@@ -1,8 +1,7 @@
 #include "application.h"
 #include "iscene.h"
 #include "menuscene.h"
-#include "textureManager.h"
-#include "common.h"
+#include "texturemanager.h"
 
 Application::Application() :
     m_window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close)
@@ -62,5 +61,5 @@ IScene *Application::getCurrentScene() const
 
 void Application::loadTextures()
 {
-	textureManager.loadTexture(TextureType::BACKGROUND, "media/background.png");
+	textureManager.loadTexture(TextureType::Background, "media/background.png");
 }

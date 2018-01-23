@@ -1,18 +1,14 @@
-#include "textureManager.h"
-
-//enumclass dodasifgdaojigfdofdgklsdajgfdlk
+#include "texturemanager.h"
 
 TextureManager::TextureManager()
 {
-}
 
-
-TextureManager::~TextureManager()
-{
 }
 
 void TextureManager::loadTexture(const TextureType & type, const std::string & filename)
 {
+	std::cout << "Loading " + filename << std::endl;
+
 	sf::Texture texture;
 	texture.loadFromFile(filename);
 	this->textures[type] = texture;

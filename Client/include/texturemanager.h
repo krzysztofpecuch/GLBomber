@@ -2,15 +2,17 @@
 #define TEXTUREMANAGER_HPP
 
 #include "common.h"
+
 #include <SFML/Graphics.hpp>
-#include <string>
+
+#include <iostream>
 #include <map>
+#include <string>
 
 class TextureManager
 {
 public:
 	TextureManager();
-	~TextureManager();
 
 	void loadTexture(const TextureType &type, const std::string &filename);
 	sf::Texture& getRef(const TextureType &type);

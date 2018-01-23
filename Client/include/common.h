@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-enum class TextureType { BACKGROUND, SOLIDWALL, SOFTWALL, EMPTY };
+enum class TextureType { Background, SolidTile, SoftTile, EmptyTile };
 
 #endif // COMMON_H
 
