@@ -13,20 +13,21 @@ class Application
 public:
     Application();
 
+    sf::RenderWindow window;
 	TextureManager textureManager;
 	sf::Sprite background;
 
     void run();
 
-private:
-    sf::RenderWindow m_window;
-
-    std::stack<IScene*> m_scenes;
-
     void pushScene(IScene* scene);
     void popScene();
     void changeCurrentScene(IScene* scene);
     IScene* getCurrentScene() const;
+
+private:
+
+    std::stack<IScene*> m_scenes;
+
 
 	void loadTextures();
 };

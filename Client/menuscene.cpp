@@ -1,7 +1,7 @@
 #include "menuscene.h"
 
-MenuScene::MenuScene(sf::RenderWindow &window) :
-    IScene(window)
+MenuScene::MenuScene(Application &application) :
+    IScene(application)
 {
 
 }

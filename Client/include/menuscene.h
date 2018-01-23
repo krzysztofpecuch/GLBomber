@@ -7,7 +7,7 @@
 class MenuScene : public IScene
 {
 public:
-    MenuScene(sf::RenderWindow& window);
+    MenuScene(Application& application);
 
     void draw(float deltaTime) override;
     void update(float deltaTime) override;

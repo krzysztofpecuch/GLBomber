@@ -1,7 +1,7 @@
 #include "gamescene.h"
 
-GameScene::GameScene(sf::RenderWindow &window) :
-    IScene(window)
+GameScene::GameScene(Application &application) :
+    IScene(application)
 {
 
 }

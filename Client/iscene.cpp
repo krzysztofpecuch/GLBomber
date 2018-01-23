@@ -1,26 +1,21 @@
 #include "iscene.h"
 
-IScene::IScene(sf::RenderWindow &window) :
-    m_window(window)
-{
-
-}
-
-IScene::~IScene()
+IScene::IScene(Application &application) :
+    m_app(application)
 {
 
 }
 
 void IScene::handleEvents()
 {
-    while (m_window.pollEvent(m_event))
+    while (m_app.window.pollEvent(m_event))
     {
         switch (m_event.type)
         {
 
         case sf::Event::Closed:
         {
-            m_window.close();
+            m_app.window.close();
             break;
         }
 

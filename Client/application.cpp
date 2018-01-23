@@ -4,18 +4,18 @@
 #include "texturemanager.h"
 
 Application::Application() :
-    m_window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close)
+    window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close)
 {
-    m_window.setFramerateLimit(60);
+    window.setFramerateLimit(60);
 
-    pushScene(new MenuScene(m_window));
+    pushScene(new MenuScene(*this));
 }
 
 void Application::run()
 {
     sf::Clock clock;
 
-    while (m_window.isOpen())
+    while (window.isOpen())
     {
         float deltaTime = clock.restart().asSeconds();
 
@@ -25,9 +25,9 @@ void Application::run()
         getCurrentScene()->handleEvents();
         getCurrentScene()->update(deltaTime);
 
-        m_window.clear();
+        window.clear();
         getCurrentScene()->draw(deltaTime);
-        m_window.display();
+        window.display();
 
     }
 }

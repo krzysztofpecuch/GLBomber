@@ -6,8 +6,8 @@
 class IScene
 {
 public:
-    IScene(sf::RenderWindow& window);
-    virtual ~IScene();
+    IScene(Application& application);
+    virtual ~IScene() = default;
 
     virtual void draw(float deltaTime) = 0;
     virtual void update(float deltaTime) = 0;
@@ -16,7 +16,7 @@ public:
     void handleEvents();
 
 private:
-    sf::RenderWindow& m_window;
+    Application& m_app;
     sf::Event m_event;
 };
 

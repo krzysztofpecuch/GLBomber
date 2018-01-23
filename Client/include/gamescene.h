@@ -6,7 +6,7 @@
 class GameScene : public IScene
 {
 public:
-    GameScene(sf::RenderWindow& window);
+    GameScene(Application& application);
 
     void draw(float deltaTime) override;
     void update(float deltaTime) override;
