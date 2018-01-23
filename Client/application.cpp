@@ -14,6 +14,12 @@ Application::Application() :
     pushScene(new MenuScene(*this));
 }
 
+Application::~Application()
+{
+    while (!m_scenes.empty())
+        popScene();
+}
+
 void Application::run()
 {
     sf::Clock clock;
@@ -70,6 +76,7 @@ const sf::Font &Application::getFont(FontType type)
 void Application::loadTextures()
 {
     textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
+    textureManager.loadTexture(TextureType::BombPointer, "media/bombpointer.png");
 }
 
 void Application::loadFonts()

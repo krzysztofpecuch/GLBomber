@@ -18,6 +18,9 @@ public:
 private:
     std::vector<sf::Text> m_options;
     sf::Sprite m_background;
+    sf::Sprite m_bombPointer;
+
+    unsigned m_currentOptionIndex = 0;
 };
 
 #endif // MENUSCENE_H

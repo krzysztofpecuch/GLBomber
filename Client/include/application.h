@@ -19,6 +19,7 @@ class Application
 {
 public:
     Application();
+    ~Application();
 
     sf::RenderWindow window;
 	TextureManager textureManager;
