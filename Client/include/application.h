@@ -1,8 +1,10 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "textureManager.h"
 #include <SFML/Graphics.hpp>
 #include <stack>
+
 
 class IScene;
 
@@ -10,6 +12,9 @@ class Application
 {
 public:
     Application();
+
+	TextureManager textureManager;
+	sf::Sprite background;
 
     void run();
 
@@ -22,6 +27,8 @@ private:
     void popScene();
     void changeCurrentScene(IScene* scene);
     IScene* getCurrentScene() const;
+
+	void loadTextures();
 };
 
 #endif // APPLICATION_H

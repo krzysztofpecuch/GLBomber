@@ -3,6 +3,7 @@
 *.vcxproj
 *.filters
 Debug/
+media/
 
 ### Qt ###
 # C++ objects and libs
