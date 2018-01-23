@@ -4,6 +4,7 @@
 *.filters
 Debug/
 media/
+fonts/
 
 ### Qt ###
 # C++ objects and libs
