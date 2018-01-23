@@ -15,8 +15,10 @@ public:
 
     void handleEvents();
 
-private:
+protected:
     Application& m_app;
+
+private:
     sf::Event m_event;
 };
 

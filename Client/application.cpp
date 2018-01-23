@@ -8,6 +8,9 @@ Application::Application() :
 {
     window.setFramerateLimit(60);
 
+    loadTextures();
+    loadFonts();
+
     pushScene(new MenuScene(*this));
 }
 
@@ -59,7 +62,19 @@ IScene *Application::getCurrentScene() const
     return m_scenes.top();
 }
 
+const sf::Font &Application::getFont(FontType type)
+{
+    return m_fonts[type];
+}
+
 void Application::loadTextures()
 {
-	textureManager.loadTexture(TextureType::Background, "media/background.png");
+    textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
+}
+
+void Application::loadFonts()
+{
+    sf::Font font;
+    font.loadFromFile("fonts/main.ttf");
+    m_fonts[FontType::Menu] = font;
 }
