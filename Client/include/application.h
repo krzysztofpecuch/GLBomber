@@ -36,9 +36,12 @@ public:
 private:
     std::stack<IScene*> m_scenes;
     std::map<FontType, sf::Font> m_fonts;
+    sf::Event m_event;
 
 	void loadTextures();
     void loadFonts();
+
+    void handleEvents();
 };
 
 #endif // APPLICATION_H

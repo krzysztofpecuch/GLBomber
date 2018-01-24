@@ -31,7 +31,8 @@ void Application::run()
         if (getCurrentScene() == nullptr)
             continue;
 
-        getCurrentScene()->handleEvents();
+        handleEvents();
+
         getCurrentScene()->update(deltaTime);
 
         window.clear();
@@ -49,6 +50,7 @@ void Application::pushScene(IScene *scene)
 void Application::popScene()
 {
     delete m_scenes.top();
+//    m_scenes.top() = nullptr;
     m_scenes.pop();
 }
 
@@ -88,4 +90,30 @@ void Application::loadFonts()
     sf::Font font;
     font.loadFromFile("fonts/main.ttf");
     m_fonts[FontType::Menu] = font;
+}
+
+void Application::handleEvents()
+{
+    while (window.pollEvent(m_event))
+    {
+        switch (m_event.type)
+        {
+
+        case sf::Event::Closed:
+        {
+            window.close();
+            break;
+        }
+
+        case sf::Event::KeyPressed:
+        {
+            getCurrentScene()->handleInput(m_event.key.code);
+            break;
+        }
+
+        default:
+            break;
+
+        }
+    }
 }

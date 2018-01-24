@@ -13,13 +13,9 @@ public:
     virtual void update(float deltaTime) = 0;
     virtual void handleInput(sf::Keyboard::Key keyCode) = 0;
 
-    void handleEvents();
-
 protected:
     Application& m_app;
 
-private:
-    sf::Event m_event;
 };
 
 #endif // ISCENE_H
