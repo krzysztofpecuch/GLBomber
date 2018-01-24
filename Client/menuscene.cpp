@@ -9,7 +9,17 @@ MenuScene::MenuScene(Application &application) :
     m_background.setTexture(m_app.textureManager.getRef(TextureType::MenuBackground));
     m_bombPointer.setTexture(m_app.textureManager.getRef(TextureType::BombPointer));
 
-    setupOptions();
+    for (unsigned i = 0; i < stringOptions.size(); ++i)
+    {
+        sf::Text text(stringOptions[i], m_app.getFont(FontType::Menu), 70);
+        m_options.push_back(text);
+    }
+
+    m_options.front().setPosition(m_app.window.getSize().x / 2 - m_options.front().getLocalBounds().width / 2,
+                                  m_app.window.getSize().y / 2 - m_options.front().getLocalBounds().height / 2 - 35);
+
+    m_options.back().setPosition(m_app.window.getSize().x / 2 - m_options.back().getLocalBounds().width / 2,
+                                 m_options.front().getGlobalBounds().top + m_options.front().getGlobalBounds().height + 10);
 
     m_bombPointer.setPosition(m_options.front().getGlobalBounds().left - m_bombPointer.getLocalBounds().width - 10,
                               m_options.front().getGlobalBounds().top + m_options.front().getGlobalBounds().height / 2 - m_bombPointer.getLocalBounds().height / 2);
@@ -86,19 +96,4 @@ void MenuScene::handleInput(sf::Keyboard::Key keyCode)
     m_bombPointer.setPosition(m_options[m_currentOptionIndex].getGlobalBounds().left - m_bombPointer.getLocalBounds().width - 10,
                               m_options[m_currentOptionIndex].getGlobalBounds().top + m_options[m_currentOptionIndex].getGlobalBounds().height / 2
                               - m_bombPointer.getLocalBounds().height / 2);
-}
-
-void MenuScene::setupOptions()
-{
-    for (unsigned i = 0; i < stringOptions.size(); ++i)
-    {
-        sf::Text text(stringOptions[i], m_app.getFont(FontType::Menu), 70);
-        m_options.push_back(text);
-    }
-
-    m_options.front().setPosition(m_app.window.getSize().x / 2 - m_options.front().getLocalBounds().width / 2,
-                                  m_app.window.getSize().y / 2 - m_options.front().getLocalBounds().height / 2 - 35);
-
-    m_options.back().setPosition(m_app.window.getSize().x / 2 - m_options.back().getLocalBounds().width / 2,
-                                 m_options.front().getGlobalBounds().top + m_options.front().getGlobalBounds().height + 10);
 }

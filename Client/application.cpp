@@ -1,6 +1,7 @@
 #include "application.h"
 #include "iscene.h"
 #include "menuscene.h"
+#include "characterselectscene.h"
 #include "texturemanager.h"
 
 Application::Application() :
@@ -82,7 +83,12 @@ void Application::loadTextures()
 	textureManager.loadTexture(TextureType::SoftTile, "media/softTile.png");
 	textureManager.loadTexture(TextureType::EmptyTile, "media/emptyTile.png");
     textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
-    textureManager.loadTexture(TextureType::BombPointer, "media/bombpointer.png");
+    textureManager.loadTexture(TextureType::BombPointer, "media/bomb_pointer.png");
+    textureManager.loadTexture(TextureType::TrianglePointer, "media/triangle_pointer.png");
+    textureManager.loadTexture(TextureType::Skin1, "media/skin1.png");
+    textureManager.loadTexture(TextureType::Skin2, "media/skin1.png");
+    textureManager.loadTexture(TextureType::Skin3, "media/skin1.png");
+    textureManager.loadTexture(TextureType::Skin4, "media/skin1.png");
 }
 
 void Application::loadFonts()
@@ -102,6 +108,16 @@ void Application::handleEvents()
         case sf::Event::Closed:
         {
             window.close();
+            break;
+        }
+
+        case sf::Event::TextEntered:
+        {
+            CharacterSelectScene* scene = dynamic_cast<CharacterSelectScene*>(getCurrentScene());
+            if (!scene)
+                break;
+
+            scene->captureTextEntered(m_event.text.unicode);
             break;
         }
 

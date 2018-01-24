@@ -7,7 +7,12 @@ enum class TextureType {
 	SoftTile, 
 	EmptyTile, 
 	MenuBackground,
-	BombPointer
+    BombPointer,
+    TrianglePointer,
+    Skin1,
+    Skin2,
+    Skin3,
+    Skin4
 };
 
 enum class TileType { 

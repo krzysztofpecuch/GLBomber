@@ -15,7 +15,6 @@ public:
 
 protected:
     Application& m_app;
-
 };
 
 #endif // ISCENE_H
