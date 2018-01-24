@@ -11,6 +11,8 @@ class Tile
 {
 public:
 	Tile();
+    Tile(const unsigned int tileSize, const unsigned int height, sf::Texture& texture, const std::vector<Animation>& animations,
+        const TileType tileType);
 
 	AnimationHandler animationHandler;
 	sf::Sprite sprite;
@@ -24,9 +26,6 @@ public:
 	* First is for transport */
 	unsigned int regions[1];
 
-	Tile() { }
-	Tile(const unsigned int tileSize, const unsigned int height, sf::Texture& texture, const std::vector<Animation>& animations,
-		const TileType tileType);
 
 	void const draw(sf::RenderWindow &window, float dt);
 	void update();
