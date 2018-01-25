@@ -23,7 +23,6 @@ private:
     std::map<int, sf::TcpSocket*> m_clients;
     std::map<int, std::thread*> m_clientsThreads;
 
-    void manageConnections();
     void receiveData(int clientID, sf::TcpSocket* client);
 };
 

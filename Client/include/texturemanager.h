@@ -9,6 +9,20 @@
 #include <map>
 #include <string>
 
+enum class TextureType {
+    Background,
+    SolidTile,
+    SoftTile,
+    EmptyTile,
+    MenuBackground,
+    BombPointer,
+    TrianglePointer,
+    Skin1,
+    Skin2,
+    Skin3,
+    Skin4
+};
+
 class TextureManager
 {
 public:

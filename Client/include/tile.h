@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "animationhandler.h"
-#include "common.h"
+#include "texturemanager.h"
 
 class Tile
 {
@@ -27,7 +27,7 @@ public:
 	unsigned int regions[1];
 
 
-	void const draw(sf::RenderWindow &window, float dt);
+    void draw(sf::RenderWindow &window, float dt);
 	void update();
 	TextureType tileToTexture(TileType type);
 };

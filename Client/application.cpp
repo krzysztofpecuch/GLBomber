@@ -8,6 +8,7 @@ Application::Application() :
     window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close)
 {
     window.setFramerateLimit(60);
+//    m_socket.connect();
 
     loadTextures();
     loadFonts();
@@ -51,7 +52,6 @@ void Application::pushScene(IScene *scene)
 void Application::popScene()
 {
     delete m_scenes.top();
-//    m_scenes.top() = nullptr;
     m_scenes.pop();
 }
 
@@ -74,6 +74,11 @@ IScene *Application::getCurrentScene() const
 const sf::Font &Application::getFont(FontType type)
 {
     return m_fonts[type];
+}
+
+void Application::sendToServer(sf::Packet &packet)
+{
+    m_socket.send(packet);
 }
 
 void Application::loadTextures()

@@ -28,7 +28,8 @@ Tile::Tile(const unsigned int tileSize, const unsigned int height, sf::Texture& 
 	this->animationHandler.update(0.0f);
 }
 
-void const Tile::draw(sf::RenderWindow &window, float dt) {
+void Tile::draw(sf::RenderWindow &window, float dt)
+{
 	animationHandler.changeAnimation(tileVariant);
 
 	animationHandler.update(dt);

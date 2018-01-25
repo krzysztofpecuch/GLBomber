@@ -1,4 +1,5 @@
 #include "characterselectscene.h"
+#include "gamescene.h"
 
 const std::vector<std::string> stringOptions {"Enter nickname", "Choose skin"};
 
@@ -18,8 +19,6 @@ CharacterSelectScene::CharacterSelectScene(Application &application) :
     m_options.front().setPosition(m_app.window.getSize().x / 2 - m_options.front().getLocalBounds().width / 2, 300);
     m_options.back().setPosition(m_app.window.getSize().x / 2 - m_options.back().getLocalBounds().width / 2, 400);
 
-//    sf::Text()
-
     m_nicknameHolder.setString("Player");
     m_nicknameHolder.setFillColor(sf::Color(227, 162, 6));
     m_nicknameHolder.setPosition(m_app.window.getSize().x / 2 - m_nicknameHolder.getGlobalBounds().width / 2,
@@ -30,7 +29,6 @@ CharacterSelectScene::CharacterSelectScene(Application &application) :
     for (unsigned i = 0; i < skinTypes.size(); ++i)
     {
         sf::Sprite skinSprite(m_app.textureManager.getRef(skinTypes[i]));
-//        skinSprite.setScale(0.9f, 0.9f);
         m_skins.push_back(skinSprite);
     }
 
@@ -98,6 +96,18 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
             return;
 
         m_currentOptionIndex++;
+
+        break;
+    }
+
+    case sf::Keyboard::Return:
+    {
+        sf::Packet packet;
+        packet << m_nicknameHolder.getString().toAnsiString() <<  m_currentOptionIndex;
+
+        m_app.sendToServer(packet);
+
+        m_app.changeCurrentScene(new GameScene(m_app));
 
         break;
     }

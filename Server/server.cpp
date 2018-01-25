@@ -59,6 +59,20 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
         if (status == sf::Socket::Done)
         {
             // process data
+            std::string nickname;
+            unsigned skin;
+
+            packet >> nickname >> skin;
+
+            std::cout << "Message received!" << std::endl;
+
+            packet.clear();;
+
+            std::string message = "ELO";
+
+            packet << message;
+
+            client->send(packet);
         }
         else if (status == sf::Socket::Disconnected)
         {
@@ -69,6 +83,8 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
 
             delete m_clientsThreads[clientID];
             m_clientsThreads.erase(m_clientsThreads.find(clientID));
+
+            m_idToGrant--;
 
             return;
         }

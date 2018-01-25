@@ -2,8 +2,10 @@
 #define APPLICATION_H
 
 #include "textureManager.h"
+#include "socket.h"
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 
 #include <stack>
 #include <map>
@@ -33,10 +35,14 @@ public:
 
     const sf::Font& getFont(FontType type);
 
+    void sendToServer(sf::Packet& packet);
+
 private:
     std::stack<IScene*> m_scenes;
     std::map<FontType, sf::Font> m_fonts;
     sf::Event m_event;
+
+    Socket m_socket;
 
 	void loadTextures();
     void loadFonts();
