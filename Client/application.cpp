@@ -8,7 +8,6 @@ Application::Application() :
     window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close)
 {
     window.setFramerateLimit(60);
-//    m_socket.connect();
 
     loadTextures();
     loadFonts();
@@ -94,6 +93,7 @@ void Application::loadTextures()
     textureManager.loadTexture(TextureType::Skin2, "media/skin1.png");
     textureManager.loadTexture(TextureType::Skin3, "media/skin1.png");
     textureManager.loadTexture(TextureType::Skin4, "media/skin1.png");
+    textureManager.loadTexture(TextureType::SkinGray, "media/skin_gray.png");
 }
 
 void Application::loadFonts()

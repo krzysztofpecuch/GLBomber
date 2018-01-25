@@ -12,7 +12,6 @@ public:
     Socket();
     ~Socket();
 
-//    void connect();
     void send(sf::Packet &packet);
 
 private:

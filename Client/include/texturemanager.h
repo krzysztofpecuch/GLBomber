@@ -20,7 +20,8 @@ enum class TextureType {
     Skin1,
     Skin2,
     Skin3,
-    Skin4
+    Skin4,
+    SkinGray
 };
 
 class TextureManager
