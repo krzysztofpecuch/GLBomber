@@ -1,8 +1,7 @@
 #include "server.h"
+#include "common.h"
 
 #include <iostream>
-
-const int PORT = 55001;
 
 Server::Server()
 {
@@ -58,21 +57,41 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
 
         if (status == sf::Socket::Done)
         {
-            // process data
-            std::string nickname;
-            unsigned skin;
-
-            packet >> nickname >> skin;
-
             std::cout << "Message received!" << std::endl;
 
-            packet.clear();;
+            int type;
 
-            std::string message = "ELO";
+            packet >> type;
 
-            packet << message;
+            switch (type)
+            {
 
-            client->send(packet);
+            case PacketType::PlayerInitialData:
+            {
+                PlayerInitialData data;
+
+                packet >> data;
+
+                // process data
+
+                packet.clear();
+
+                packet << PacketType::SkinChoosed << data.skin;
+
+                for (const auto& client : m_clients)
+                {
+                    client.second->send(packet);
+                }
+
+                break;
+            }
+
+            default:
+                break;
+
+            }
+
+            //            client->send(packet);
         }
         else if (status == sf::Socket::Disconnected)
         {

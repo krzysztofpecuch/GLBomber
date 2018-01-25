@@ -1,4 +1,5 @@
 #include "socket.h"
+#include "common.h"
 
 #include <iostream>
 
@@ -6,7 +7,7 @@ Socket::Socket()
 {
     std::thread connectingThread([this]()
     {
-        if (m_socket.connect(sf::IpAddress::getLocalAddress(), 55001) != sf::Socket::Done)
+        if (m_socket.connect(sf::IpAddress::getLocalAddress(), PORT) != sf::Socket::Done)
         {
             std::cout << "Cannot connect to server!" << std::endl;
         }

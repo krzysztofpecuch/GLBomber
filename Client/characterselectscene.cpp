@@ -103,7 +103,12 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
     case sf::Keyboard::Return:
     {
         sf::Packet packet;
-        packet << m_nicknameHolder.getString().toAnsiString() <<  m_currentOptionIndex;
+
+        PlayerInitialData data;
+        data.nickname = m_nicknameHolder.getString().toAnsiString();
+        data.skin = m_currentOptionIndex;
+
+        packet << PacketType::PlayerInitialData << data;
 
         m_app.sendToServer(packet);
 
