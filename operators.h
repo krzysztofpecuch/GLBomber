@@ -3,10 +3,15 @@
 
 #include <SFML/Network.hpp>
 
-struct PlayerInitialData;
+namespace SharedData
+{
+struct Player;
+}
 
-sf::Packet& operator<< (sf::Packet& packet, const PlayerInitialData& data);
+sf::Packet& operator<< (sf::Packet& packet, const SharedData::Player& data);
+sf::Packet& operator>> (sf::Packet& packet, SharedData::Player& data);
 
-sf::Packet& operator>> (sf::Packet& packet, PlayerInitialData& data);
+sf::Packet& operator<< (sf::Packet& packet, const std::vector<int>& data);
+sf::Packet& operator>> (sf::Packet& packet, std::vector<int>& data);
 
 #endif // OPERATORS_H

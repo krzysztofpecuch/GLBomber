@@ -11,11 +11,13 @@
 
 namespace PacketType
 {
-    enum Type
-    {
-        PlayerInitialData,
-        SkinChoosed
-    };
+
+enum Type
+{
+    PlayerInitialData,
+    SkinChoosed,
+    DisabledSkinsRequest
+};
 
 }
 
@@ -26,11 +28,17 @@ enum class TileType
     EmptyTile
 };
 
-struct PlayerInitialData
+namespace SharedData
+{
+
+struct Player
 {
     std::string nickname;
     int skin;
 };
+
+}
+
 
 #endif // COMMON_H
 

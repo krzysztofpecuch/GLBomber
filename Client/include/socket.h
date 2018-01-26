@@ -5,16 +5,18 @@
 
 #include <thread>
 
+class Application;
 
 class Socket
 {
 public:
-    Socket();
+    Socket(Application& application);
     ~Socket();
 
     void send(sf::Packet &packet);
 
 private:
+    Application& m_app;
     sf::TcpSocket m_socket;
     std::thread* receivingThread = nullptr;
     bool m_running = true;

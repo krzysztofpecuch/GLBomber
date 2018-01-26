@@ -68,7 +68,7 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
 
             case PacketType::PlayerInitialData:
             {
-                PlayerInitialData data;
+                SharedData::Player data;
 
                 packet >> data;
 
@@ -83,6 +83,19 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                     client.second->send(packet);
                 }
 
+                m_gameData.disabledSkins.push_back(data.skin);
+
+                break;
+            }
+
+            case PacketType::DisabledSkinsRequest:
+            {
+                packet.clear();
+
+                packet << PacketType::DisabledSkinsRequest << m_gameData.disabledSkins;
+
+                client->send(packet);
+
                 break;
             }
 
@@ -90,8 +103,6 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                 break;
 
             }
-
-            //            client->send(packet);
         }
         else if (status == sf::Socket::Disconnected)
         {

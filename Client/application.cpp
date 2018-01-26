@@ -5,7 +5,8 @@
 #include "texturemanager.h"
 
 Application::Application() :
-    window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close)
+    window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close),
+    m_socket(*this)
 {
     window.setFramerateLimit(60);
 

@@ -14,6 +14,8 @@ public:
 
     void captureTextEntered(char character);
 
+    void setSkinDisabled(int option);
+
 private:
     std::vector<sf::Text> m_options;
     sf::Text m_nicknameHolder;
@@ -21,6 +23,7 @@ private:
 
     sf::Sprite m_pointer;
     std::vector<sf::Sprite> m_skins;
+    std::vector<int> m_disabledSkins;
 
     unsigned m_currentOptionIndex = 0;
 };

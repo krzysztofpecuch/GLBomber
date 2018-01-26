@@ -7,6 +7,10 @@ CharacterSelectScene::CharacterSelectScene(Application &application) :
     IScene(application),
     m_nicknameHolder("", m_app.getFont(FontType::Menu), 25)
 {
+    sf::Packet packet;
+    packet << PacketType::DisabledSkinsRequest;
+    m_app.sendToServer(packet);
+
     m_background.setTexture(m_app.textureManager.getRef(TextureType::MenuBackground));
     m_pointer.setTexture(m_app.textureManager.getRef(TextureType::TrianglePointer));
 
@@ -104,7 +108,7 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
     {
         sf::Packet packet;
 
-        PlayerInitialData data;
+        SharedData::Player data;
         data.nickname = m_nicknameHolder.getString().toAnsiString();
         data.skin = m_currentOptionIndex;
 
@@ -114,7 +118,7 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
 
         m_app.changeCurrentScene(new GameScene(m_app));
 
-        break;
+        return;
     }
 
     default:
@@ -151,4 +155,13 @@ void CharacterSelectScene::captureTextEntered(char character)
 
     m_nicknameHolder.setString(currentText);
     m_nicknameHolder.setPosition(m_app.window.getSize().x / 2 - m_nicknameHolder.getGlobalBounds().width / 2, m_nicknameHolder.getPosition().y);
+}
+
+void CharacterSelectScene::setSkinDisabled(int option)
+{
+    m_disabledSkins.push_back(option);
+
+    m_skins[option].setTexture(m_app.textureManager.getRef(TextureType::SkinGray));
+
+    std::cout << "Disabled option: " << option << std::endl;
 }

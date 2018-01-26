@@ -1,9 +1,11 @@
 #include "socket.h"
 #include "common.h"
+#include "application.h"
+#include "characterselectscene.h"
 
 #include <iostream>
 
-Socket::Socket()
+Socket::Socket(Application &application) : m_app(application)
 {
     std::thread connectingThread([this]()
     {
@@ -41,10 +43,38 @@ void Socket::receive()
         sf::Packet packet;
         m_socket.receive(packet);
 
-        std::string message;
+        int type;
+        packet >> type;
 
-        packet >> message;
+        std::cout << "Message type: " << type << std::endl;
 
-//        std::cout << message << std::endl;
+        switch (type)
+        {
+
+        case PacketType::SkinChoosed:
+        {
+            int skin;
+            packet >> skin;
+
+            CharacterSelectScene* scene = dynamic_cast<CharacterSelectScene*>(m_app.getCurrentScene());
+            if (!scene)
+                break;
+
+            scene->setSkinDisabled(skin);
+
+            break;
+        }
+        case PacketType::DisabledSkinsRequest:
+        {
+            std::vector<int> disabledSkins;
+
+            packet >> disabledSkins;
+
+            break;
+        }
+
+        default:
+            break;
+        }
     }
 }
