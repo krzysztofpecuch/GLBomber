@@ -46,3 +46,4 @@ Makefile*
 
 # QtCtreator CMake
 CMakeLists.txt.user*
+Client/enc_temp_folder/

@@ -1,5 +1,6 @@
 #include "menuscene.h"
 #include "characterselectscene.h"
+#include "gamescene.h"
 
 const std::vector<std::string> stringOptions {"Play", "Exit"};
 
@@ -76,9 +77,9 @@ void MenuScene::handleInput(sf::Keyboard::Key keyCode)
     {
         switch (m_currentOptionIndex)
         {
-            case 0:
-            m_app.pushScene(new CharacterSelectScene(m_app));
-            break;
+        case 0:
+			m_app.pushScene(new GameScene(m_app));
+        break;
 
         case 1:
             m_app.window.close();

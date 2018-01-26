@@ -10,7 +10,9 @@ Application::Application() :
     window.setFramerateLimit(60);
 
     loadTextures();
+	loadTiles();
     loadFonts();
+	
 
     pushScene(new MenuScene(*this));
 }
@@ -19,6 +21,30 @@ Application::~Application()
 {
     while (!m_scenes.empty())
         popScene();
+}
+
+void Application::loadTextures()
+{
+	textureManager.loadTexture(TextureType::Background, "media/background.png");
+	textureManager.loadTexture(TextureType::SolidTile, "media/solidTile.png");
+	//textureManager.loadTexture(TextureType::SoftTile, "media/softTile.png");
+	textureManager.loadTexture(TextureType::EmptyTile, "media/emptyTile.png");
+	textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
+	textureManager.loadTexture(TextureType::BombPointer, "media/bomb_pointer.png");
+	textureManager.loadTexture(TextureType::TrianglePointer, "media/triangle_pointer.png");
+	textureManager.loadTexture(TextureType::Skin1, "media/skin1.png");
+	textureManager.loadTexture(TextureType::Skin2, "media/skin1.png");
+	textureManager.loadTexture(TextureType::Skin3, "media/skin1.png");
+	textureManager.loadTexture(TextureType::Skin4, "media/skin1.png");
+	textureManager.loadTexture(TextureType::SoftTile, "media/softTile2.png");
+	textureManager.loadTexture(TextureType::SkinGray, "media/skin_gray.png");
+}
+
+void Application::loadTiles()
+{
+	//tileAtlas["test"] = Tile(tileSize, 1, textureManager.getRef(TextureType::EmptyTile), { Animation(0, 0, 1.f) }, TileType::EmptyTile);
+	tileAtlas[TileType::SoftTile] = Tile(1, textureManager, { Animation(0, 4, 0.5f), Animation(0, 4, 0.5f), Animation(0, 4, 0.5f) }, TileType::SoftTile);
+	tileAtlas[TileType::EmptyTile] = Tile(1, textureManager, { Animation(0, 0, 1.f) }, TileType::EmptyTile);
 }
 
 void Application::run()
@@ -33,13 +59,10 @@ void Application::run()
             continue;
 
         handleEvents();
-
         getCurrentScene()->update(deltaTime);
-
-        window.clear();
-        getCurrentScene()->draw(deltaTime);
-        window.display();
-
+		window.clear(); 
+		getCurrentScene()->draw(deltaTime);
+		window.display();
     }
 }
 
@@ -78,22 +101,6 @@ const sf::Font &Application::getFont(FontType type)
 void Application::sendToServer(sf::Packet &packet)
 {
     m_socket.send(packet);
-}
-
-void Application::loadTextures()
-{
-	textureManager.loadTexture(TextureType::Background, "media/background.png");
-	textureManager.loadTexture(TextureType::SolidTile, "media/solidTile.png");
-	textureManager.loadTexture(TextureType::SoftTile, "media/softTile.png");
-	textureManager.loadTexture(TextureType::EmptyTile, "media/emptyTile.png");
-    textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
-    textureManager.loadTexture(TextureType::BombPointer, "media/bomb_pointer.png");
-    textureManager.loadTexture(TextureType::TrianglePointer, "media/triangle_pointer.png");
-    textureManager.loadTexture(TextureType::Skin1, "media/skin1.png");
-    textureManager.loadTexture(TextureType::Skin2, "media/skin1.png");
-    textureManager.loadTexture(TextureType::Skin3, "media/skin1.png");
-    textureManager.loadTexture(TextureType::Skin4, "media/skin1.png");
-    textureManager.loadTexture(TextureType::SkinGray, "media/skin_gray.png");
 }
 
 void Application::loadFonts()

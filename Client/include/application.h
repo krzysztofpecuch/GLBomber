@@ -2,6 +2,8 @@
 #define APPLICATION_H
 
 #include "textureManager.h"
+#include "animationhandler.h"
+#include "tile.h"
 #include "socket.h"
 
 #include <SFML/Graphics.hpp>
@@ -35,6 +37,8 @@ public:
 
     const sf::Font& getFont(FontType type);
 
+	std::map<TileType, Tile> tileAtlas;
+
     void sendToServer(sf::Packet& packet);
 
 private:
@@ -45,6 +49,7 @@ private:
     Socket m_socket;
 
 	void loadTextures();
+	void loadTiles();
     void loadFonts();
 
     void handleEvents();

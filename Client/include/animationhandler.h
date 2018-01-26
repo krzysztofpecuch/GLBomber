@@ -22,15 +22,22 @@ public:
 	AnimationHandler();
 	AnimationHandler(const sf::IntRect &frameSize);
 
-	void addAnimation(Animation &anim);
+	void addAnimation(const Animation &anim);
 	void update(const float dt);
 	void changeAnimation(unsigned int animationNumber);
+	void activateAnimation();
+	void setLooped();
+	bool animationEnded();
 
 	sf::IntRect frameSize;
 	sf::IntRect bounds;
 private:
+	int m_frame;
+	bool m_freezeFrame;
+	bool m_endOfAnimation;
+	bool m_looped;
 	std::vector<Animation> m_animations;
-	float m_t;
+	float m_timeCount;
 	int m_currentAnimation;
 };
 

@@ -14,6 +14,7 @@ enum class TextureType {
     SolidTile,
     SoftTile,
     EmptyTile,
+	TestTile,
     MenuBackground,
     BombPointer,
     TrianglePointer,
@@ -23,6 +24,8 @@ enum class TextureType {
     Skin4,
     SkinGray
 };
+
+#define tileSize 64
 
 class TextureManager
 {

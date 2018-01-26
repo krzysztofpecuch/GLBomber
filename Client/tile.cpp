@@ -1,24 +1,23 @@
 #include "tile.h"
 
-std::string tileTypeToStr(TileType type);
-TextureType tileTypeToTexture(TileType type);
-
 Tile::Tile() 
-{ 
+{
 
 }
 
-Tile::Tile(const unsigned int tileSize, const unsigned int height, sf::Texture& texture, const std::vector<Animation>& animations, 
-	const TileType tileType)
+Tile::Tile(const unsigned int height, TextureManager& textureManager, const std::vector<Animation>& animations, 
+	TileType type)
 {
-	this->tileType = tileType;
-	
-	tileVariant = 0;
-	regions[0] = 0;
+	//TODO pozniej byc moze private
+	tileType = type;
+	m_textureManager = &textureManager;
 
+	m_tileVariant = 0;
+	
 	sprite.setOrigin(sf::Vector2f(0.0f, tileSize*(height - 1)));
-	sprite.setTexture(texture);
-	animationHandler.frameSize = sf::IntRect(0, 0, tileSize * 2, tileSize*height);
+	sprite.setTexture(textureManager.getRef(tileToTexture(tileType)));
+
+	animationHandler.frameSize = sf::IntRect(0, 0, tileSize, tileSize*height);
 	
 	for (auto animation : animations)
 	{
@@ -28,15 +27,29 @@ Tile::Tile(const unsigned int tileSize, const unsigned int height, sf::Texture& 
 	this->animationHandler.update(0.0f);
 }
 
+void Tile::setTileVariant(int tileVariant)
+{
+	m_tileVariant = tileVariant;
+}
+
 void Tile::draw(sf::RenderWindow &window, float dt)
 {
-	animationHandler.changeAnimation(tileVariant);
-
+	animationHandler.changeAnimation(m_tileVariant);
 	animationHandler.update(dt);
 
 	sprite.setTextureRect(animationHandler.bounds);
 
 	window.draw(sprite);
+
+	if (animationHandler.animationEnded()) 
+	{
+		if (tileType == TileType::SoftTile) 
+		{
+			tileType == TileType::EmptyTile;
+			sprite.setTexture(m_textureManager->getRef(tileToTexture(tileType)));
+			animationHandler.addAnimation(Animation(0, 0, 1.f));
+		}
+	}
 }
 
 void Tile::update() {
