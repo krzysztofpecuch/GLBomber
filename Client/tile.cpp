@@ -45,7 +45,7 @@ void Tile::draw(sf::RenderWindow &window, float dt)
 	{
 		if (tileType == TileType::SoftTile) 
 		{
-			tileType == TileType::EmptyTile;
+            tileType = TileType::EmptyTile;
 			sprite.setTexture(m_textureManager->getRef(tileToTexture(tileType)));
 			animationHandler.addAnimation(Animation(0, 0, 1.f));
 		}
@@ -58,9 +58,10 @@ void Tile::update() {
 
 TextureType Tile::tileToTexture(TileType type)
 {
-	switch (type) {
+    switch (type)
+    {
 	default:
-		break;
+        return TextureType::Error;
 	case TileType::EmptyTile:
 		return TextureType::EmptyTile;
 	case TileType::SoftTile:

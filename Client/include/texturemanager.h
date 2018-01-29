@@ -22,7 +22,8 @@ enum class TextureType {
     Skin2,
     Skin3,
     Skin4,
-    SkinGray
+    SkinGray,
+    Error
 };
 
 #define tileSize 64

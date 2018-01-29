@@ -81,7 +81,7 @@ void AnimationHandler::update(const float dt)
 
 void AnimationHandler::changeAnimation(unsigned int animationVariant)
 {
-	if (m_currentAnimation == animationVariant || animationVariant >= m_animations.size() || animationVariant < 0)
+    if (m_currentAnimation == animationVariant || animationVariant >= m_animations.size())
 		return;
 
 	m_currentAnimation = animationVariant;
