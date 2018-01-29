@@ -40,6 +40,8 @@ public:
 	std::map<TileType, Tile> tileAtlas;
 
     void sendToServer(sf::Packet& packet);
+    void connectToServer();
+    void disconnectFromServer();
 
 private:
     std::stack<IScene*> m_scenes;

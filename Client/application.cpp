@@ -104,6 +104,16 @@ void Application::sendToServer(sf::Packet &packet)
     m_socket.send(packet);
 }
 
+void Application::connectToServer()
+{
+    m_socket.connect();
+}
+
+void Application::disconnectFromServer()
+{
+    m_socket.disconnect();
+}
+
 void Application::loadFonts()
 {
     sf::Font font;

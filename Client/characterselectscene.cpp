@@ -7,10 +7,6 @@ CharacterSelectScene::CharacterSelectScene(Application &application) :
     IScene(application),
     m_nicknameHolder("", m_app.getFont(FontType::Menu), 25)
 {
-    sf::Packet packet;
-    packet << PacketType::DisabledSkinsRequest;
-    m_app.sendToServer(packet);
-
     m_background.setTexture(m_app.textureManager.getRef(TextureType::MenuBackground));
     m_pointer.setTexture(m_app.textureManager.getRef(TextureType::TrianglePointer));
 
@@ -157,11 +153,23 @@ void CharacterSelectScene::captureTextEntered(char character)
     m_nicknameHolder.setPosition(m_app.window.getSize().x / 2 - m_nicknameHolder.getGlobalBounds().width / 2, m_nicknameHolder.getPosition().y);
 }
 
-void CharacterSelectScene::setSkinDisabled(int option)
+void CharacterSelectScene::updateSkins(const std::vector<int> &skins)
 {
-    m_disabledSkins.push_back(option);
+    m_disabledSkins = skins;
 
-    m_skins[option].setTexture(m_app.textureManager.getRef(TextureType::SkinGray));
+    for (int i = 0; i < m_skins.size(); ++i)
+    {
+        if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), i) != m_disabledSkins.end())
+            m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::SkinGray));
 
-    std::cout << "Disabled option: " << option << std::endl;
+        else
+            m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::Skin1));
+    }
+}
+
+void CharacterSelectScene::updateSkinsRequest()
+{
+    sf::Packet packet;
+    packet << PacketType::UpdateSkins;
+    m_app.sendToServer(packet);
 }

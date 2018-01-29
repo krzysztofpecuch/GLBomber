@@ -78,7 +78,15 @@ void MenuScene::handleInput(sf::Keyboard::Key keyCode)
         switch (m_currentOptionIndex)
         {
         case 0:
-			m_app.pushScene(new GameScene(m_app));
+        {
+            m_app.pushScene(new CharacterSelectScene(m_app));
+
+            CharacterSelectScene* scene = dynamic_cast<CharacterSelectScene*>(m_app.getCurrentScene());
+            if (!scene)
+                break;
+
+            scene->updateSkinsRequest();
+        }
         break;
 
         case 1:

@@ -36,39 +36,72 @@ void Socket::send(sf::Packet &packet)
     }
 }
 
+void Socket::connect()
+{
+    std::thread connectingThread([this]()
+    {
+        if (m_socket.connect(sf::IpAddress::getLocalAddress(), PORT) != sf::Socket::Done)
+        {
+            std::cout << "Cannot connect to server!" << std::endl;
+        }
+
+    });
+
+    connectingThread.detach();
+
+    receivingThread = new std::thread(&Socket::receive, this);
+    receivingThread->detach();
+}
+
+void Socket::disconnect()
+{
+    m_socket.disconnect();
+}
+
 void Socket::receive()
 {
     while (m_running)
     {
         sf::Packet packet;
-        m_socket.receive(packet);
+        sf::Socket::Status status = m_socket.receive(packet);
+
+        if (status != sf::Socket::Done)
+            continue;
 
         int type;
         packet >> type;
 
-        std::cout << "Message type: " << type << std::endl;
+        std::cout << "New message type: " << type << std::endl;
 
         switch (type)
         {
 
-        case PacketType::SkinChoosed:
+        case PacketType::UpdateSkins:
         {
-            int skin;
-            packet >> skin;
+            std::cout << "UpdateSkins:" << std::endl;
+            std::vector<int> skins;
+
+            int size;
+            packet >> size;
+            std::cout << "Size: " << size << std::endl;
+
+            for (int i = 0; i < size; ++i)
+            {
+                int data;
+                packet >> data;
+                std::cout << "Data: " << data << std::endl;
+
+                skins.push_back(data);
+            }
+
+            std::cout << std::endl;
+
 
             CharacterSelectScene* scene = dynamic_cast<CharacterSelectScene*>(m_app.getCurrentScene());
             if (!scene)
                 break;
 
-            scene->setSkinDisabled(skin);
-
-            break;
-        }
-        case PacketType::DisabledSkinsRequest:
-        {
-            std::vector<int> disabledSkins;
-
-            packet >> disabledSkins;
+            scene->updateSkins(skins);
 
             break;
         }

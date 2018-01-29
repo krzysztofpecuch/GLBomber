@@ -7,6 +7,7 @@ class GameScene : public IScene
 {
 public:
     GameScene(Application& application);
+    ~GameScene();
 
     void draw(float deltaTime) override;
     void update(float deltaTime) override;

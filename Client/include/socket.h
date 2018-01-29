@@ -14,6 +14,8 @@ public:
     ~Socket();
 
     void send(sf::Packet &packet);
+    void connect();
+    void disconnect();
 
 private:
     Application& m_app;

@@ -14,7 +14,9 @@ public:
 
     void captureTextEntered(char character);
 
-    void setSkinDisabled(int option);
+    void updateSkins(const std::vector<int>& skins);
+
+    void updateSkinsRequest();
 
 private:
     std::vector<sf::Text> m_options;

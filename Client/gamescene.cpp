@@ -17,7 +17,12 @@ GameScene::GameScene(Application &application) :
 			tiles.push_back(m_app.tileAtlas.at(TileType::SoftTile));
 		else
 			tiles.push_back(m_app.tileAtlas.at(TileType::EmptyTile));
-	}
+    }
+}
+
+GameScene::~GameScene()
+{
+    m_app.disconnectFromServer();
 }
 
 
