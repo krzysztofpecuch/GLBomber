@@ -26,7 +26,7 @@ enum class TextureType {
     Error
 };
 
-#define tileSize 64
+#define tileSize 62
 
 class TextureManager
 {

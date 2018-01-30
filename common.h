@@ -9,6 +9,9 @@
 
 #define PORT 55001
 
+#define MAP_WIDTH 13
+#define MAP_HEIGHT 13
+
 namespace PacketType
 {
 

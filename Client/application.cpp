@@ -5,7 +5,7 @@
 #include "texturemanager.h"
 
 Application::Application() :
-    window(sf::VideoMode(800, 800), "GL Bomber", sf::Style::Close),
+    window(sf::VideoMode(806, 806), "GL Bomber", sf::Style::Close),
     m_socket(*this)
 {
     window.setFramerateLimit(60);
@@ -28,24 +28,24 @@ Application::~Application()
 
 void Application::loadTextures()
 {
+    textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
+    textureManager.loadTexture(TextureType::BombPointer, "media/bomb_pointer.png");
+    textureManager.loadTexture(TextureType::TrianglePointer, "media/triangle_pointer.png");
 	textureManager.loadTexture(TextureType::Background, "media/background.png");
-	textureManager.loadTexture(TextureType::SolidTile, "media/solidTile.png");
-	textureManager.loadTexture(TextureType::EmptyTile, "media/emptyTile.png");
-	textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
-	textureManager.loadTexture(TextureType::BombPointer, "media/bomb_pointer.png");
-	textureManager.loadTexture(TextureType::TrianglePointer, "media/triangle_pointer.png");
+    textureManager.loadTexture(TextureType::EmptyTile, "media/empty_tile.png");
+    textureManager.loadTexture(TextureType::SoftTile, "media/soft_tile.png");
+    textureManager.loadTexture(TextureType::SolidTile, "media/solid_tile.png");
 	textureManager.loadTexture(TextureType::Skin1, "media/skin1.png");
 	textureManager.loadTexture(TextureType::Skin2, "media/skin1.png");
 	textureManager.loadTexture(TextureType::Skin3, "media/skin1.png");
 	textureManager.loadTexture(TextureType::Skin4, "media/skin1.png");
-	textureManager.loadTexture(TextureType::SoftTile, "media/softTile2.png");
 	textureManager.loadTexture(TextureType::SkinGray, "media/skin_gray.png");
 }
 
 void Application::loadTiles()
 {
-	//tileAtlas["test"] = Tile(tileSize, 1, textureManager.getRef(TextureType::EmptyTile), { Animation(0, 0, 1.f) }, TileType::EmptyTile);
-	tileAtlas[TileType::SoftTile] = Tile(1, textureManager, { Animation(0, 4, 0.5f), Animation(0, 4, 0.5f), Animation(0, 4, 0.5f) }, TileType::SoftTile);
+//    tileAtlas[TileType::SoftTile] = Tile(1, textureManager, { Animation(0, 4, 0.5f), Animation(0, 4, 0.5f), Animation(0, 4, 0.5f) }, TileType::SoftTile);
+    tileAtlas[TileType::SolidTile] = Tile(1, textureManager, { Animation(0, 0, 1.f) }, TileType::SolidTile);
 	tileAtlas[TileType::EmptyTile] = Tile(1, textureManager, { Animation(0, 0, 1.f) }, TileType::EmptyTile);
 }
 

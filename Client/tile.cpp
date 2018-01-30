@@ -40,16 +40,16 @@ void Tile::draw(sf::RenderWindow &window, float dt)
 	sprite.setTextureRect(animationHandler.bounds);
 
 	window.draw(sprite);
-
-	if (animationHandler.animationEnded()) 
-	{
-		if (tileType == TileType::SoftTile) 
-		{
-            tileType = TileType::EmptyTile;
-			sprite.setTexture(m_textureManager->getRef(tileToTexture(tileType)));
-			animationHandler.addAnimation(Animation(0, 0, 1.f));
-		}
-	}
+// to jest przykład odpalania animacji niszczenia bloku
+//	if (animationHandler.animationEnded())
+//	{
+//		if (tileType == TileType::SoftTile)
+//		{
+//            tileType = TileType::EmptyTile;
+//			sprite.setTexture(m_textureManager->getRef(tileToTexture(tileType)));
+//			animationHandler.addAnimation(Animation(0, 0, 1.f));
+//		}
+//	}
 }
 
 void Tile::update() {

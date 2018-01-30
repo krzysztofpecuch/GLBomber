@@ -14,9 +14,6 @@ public:
     void handleInput(sf::Keyboard::Key keyCode) override;
 
 private:
-	sf::Sprite m_background;
-	int width;
-	int height;
 	std::vector<Tile> tiles;
 
 };

@@ -28,6 +28,8 @@ private:
     std::map<int, std::thread*> m_clientsThreads;
 
     void receiveData(int clientID, sf::TcpSocket* client);
+
+    void generateMap
 };
 
 #endif // SERVER_H
