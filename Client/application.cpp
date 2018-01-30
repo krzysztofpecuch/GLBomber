@@ -30,7 +30,6 @@ void Application::loadTextures()
 {
 	textureManager.loadTexture(TextureType::Background, "media/background.png");
 	textureManager.loadTexture(TextureType::SolidTile, "media/solidTile.png");
-	//textureManager.loadTexture(TextureType::SoftTile, "media/softTile.png");
 	textureManager.loadTexture(TextureType::EmptyTile, "media/emptyTile.png");
 	textureManager.loadTexture(TextureType::MenuBackground, "media/menu_background.png");
 	textureManager.loadTexture(TextureType::BombPointer, "media/bomb_pointer.png");

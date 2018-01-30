@@ -73,13 +73,6 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
 
                 client->send(packet);
 
-                int type;
-                int size;
-
-                packet >> type;
-
-                std::cout << "Data sent. Type: " << type << std::endl;
-
                 break;
             }
 
@@ -151,7 +144,10 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                 }(clientID));
             }
 
-            m_gameData.players.erase(m_gameData.players.find(clientID));
+            auto playerIndex = m_gameData.players.find(clientID);
+
+            if (playerIndex != m_gameData.players.end())
+                m_gameData.players.erase(playerIndex);
 
             delete m_clients[clientID];
             m_clients.erase(m_clients.find(clientID));

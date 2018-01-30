@@ -194,7 +194,16 @@ void CharacterSelectScene::captureTextEntered(char character)
 void CharacterSelectScene::updateSkins(const std::vector<int> &skins)
 {
     m_disabledSkins = skins;
-    std::sort(m_disabledSkins.begin(), m_disabledSkins.end());
+//    std::sort(m_disabledSkins.begin(), m_disabledSkins.end());
+
+    for (unsigned i = 0; i < m_skins.size(); ++i)
+    {
+        if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), i) != m_disabledSkins.end())
+            m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::SkinGray));
+
+        else
+            m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::Skin1));
+    }
 
     if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), m_currentOptionIndex) != m_disabledSkins.end())
     {
@@ -215,17 +224,6 @@ void CharacterSelectScene::updateSkins(const std::vector<int> &skins)
                 break;
         }
     }
-
-
-    for (unsigned i = 0; i < m_skins.size(); ++i)
-    {
-        if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), i) != m_disabledSkins.end())
-            m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::SkinGray));
-
-        else
-            m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::Skin1));
-    }
-
 
 }
 
