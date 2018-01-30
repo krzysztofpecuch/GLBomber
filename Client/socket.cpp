@@ -2,6 +2,7 @@
 #include "common.h"
 #include "application.h"
 #include "characterselectscene.h"
+#include "gamescene.h"
 
 #include <iostream>
 
@@ -90,6 +91,27 @@ void Socket::receive()
                 break;
 
             scene->updateSkins(skins);
+
+            break;
+        }
+
+        case PacketType::GetMap:
+        {
+            std::vector<int> map;
+
+            for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i)
+            {
+                int tile;
+                packet >> tile;
+
+                map.push_back(tile);
+            }
+
+            GameScene* scene = dynamic_cast<GameScene*>(m_app.getCurrentScene());
+            if (!scene)
+                break;
+
+            scene->setMap(map);
 
             break;
         }

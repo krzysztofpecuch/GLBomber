@@ -19,17 +19,24 @@ enum Type
 {
     PlayerInitialData,
     UpdateSkins,
-    PlayerLeftGame
+    PlayerLeftGame,
+    GetMap
 };
 
 }
 
-enum class TileType
+namespace TileType
 {
-    SolidTile,
+
+enum Type
+{
+    EmptyTile,
     SoftTile,
-    EmptyTile
+    SolidTile
 };
+
+}
+
 
 namespace SharedData
 {

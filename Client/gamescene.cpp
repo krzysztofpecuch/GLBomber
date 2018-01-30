@@ -4,17 +4,24 @@
 GameScene::GameScene(Application &application) :
 	IScene(application)
 {
-    for (int i = 0; i < MAP_WIDTH * MAP_HEIGHT; i++)
-	{
-        if (i < MAP_WIDTH)
-            tiles.push_back(m_app.tileAtlas.at(TileType::SolidTile));
-        else if (i % MAP_HEIGHT == 0 || i % MAP_HEIGHT == MAP_HEIGHT - 1)
-            tiles.push_back(m_app.tileAtlas.at(TileType::SolidTile));
-        else if (i > MAP_WIDTH * (MAP_HEIGHT-1))
-            tiles.push_back(m_app.tileAtlas.at(TileType::SolidTile));
-		else
-			tiles.push_back(m_app.tileAtlas.at(TileType::EmptyTile));
-    }
+//    sf::Packet packet;
+//    packet << PacketType::GetMap;
+//    m_app.sendToServer(packet);
+
+//    for (int i = 0; i < MAP_WIDTH * MAP_HEIGHT; i++)
+//	{
+//        if (i < MAP_WIDTH)
+//            tiles.push_back(m_app.tileAtlas.at(TileType::SolidTile));
+
+//        else if (i % MAP_HEIGHT == 0 || i % MAP_HEIGHT == MAP_HEIGHT - 1)
+//            tiles.push_back(m_app.tileAtlas.at(TileType::SolidTile));
+
+//        else if (i > MAP_WIDTH * (MAP_HEIGHT-1))
+//            tiles.push_back(m_app.tileAtlas.at(TileType::SolidTile));
+
+//		else
+//			tiles.push_back(m_app.tileAtlas.at(TileType::EmptyTile));
+//    }
 }
 
 GameScene::~GameScene()
@@ -24,9 +31,11 @@ GameScene::~GameScene()
     m_app.sendToServer(packet);
 }
 
-
 void GameScene::draw(float deltaTime)
 {
+    if (tiles.empty())
+        return;
+
     for (int y = 0; y < MAP_HEIGHT; y++)
 	{
         for (int x = 0; x < MAP_WIDTH; x++)
@@ -57,5 +66,16 @@ void GameScene::handleInput(sf::Keyboard::Key keyCode)
 
     default:
         break;
+    }
+}
+
+void GameScene::setMap(const std::vector<int> &map)
+{
+    for (int y = 0; y < MAP_HEIGHT; y++)
+    {
+        for (int x = 0; x < MAP_WIDTH; x++)
+        {
+            tiles.push_back(m_app.tileAtlas.at(static_cast<TileType::Type>(map[y * MAP_WIDTH + x])));
+        }
     }
 }

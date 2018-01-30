@@ -5,8 +5,8 @@ Tile::Tile()
 
 }
 
-Tile::Tile(const unsigned int height, TextureManager& textureManager, const std::vector<Animation>& animations, 
-	TileType type)
+Tile::Tile(const unsigned int height, TextureManager& textureManager, const std::vector<Animation>& animations,
+    TileType::Type type)
 {
 	//TODO pozniej byc moze private
 	tileType = type;
@@ -56,7 +56,7 @@ void Tile::update() {
 
 }
 
-TextureType Tile::tileToTexture(TileType type)
+TextureType Tile::tileToTexture(TileType::Type type)
 {
     switch (type)
     {

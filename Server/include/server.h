@@ -29,7 +29,7 @@ private:
 
     void receiveData(int clientID, sf::TcpSocket* client);
 
-    void generateMap
+    void generateMap();
 };
 
 #endif // SERVER_H

@@ -11,16 +11,16 @@ class Tile
 {
 public:
 	Tile();
-    Tile(const unsigned int height, TextureManager& textureManager, const std::vector<Animation>& animations, TileType type);
+    Tile(const unsigned int height, TextureManager& textureManager, const std::vector<Animation>& animations, TileType::Type type);
 
 	AnimationHandler animationHandler;
 	sf::Sprite sprite;
-	TileType tileType;
+    TileType::Type tileType;
 
 	void setTileVariant(int tileVariant);
 	void draw(sf::RenderWindow &window, float dt);
 	void update();
-	TextureType tileToTexture(TileType type);
+    TextureType tileToTexture(TileType::Type type);
 
 
 private:

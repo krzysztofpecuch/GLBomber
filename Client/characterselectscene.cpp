@@ -152,6 +152,10 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
 
         m_app.changeCurrentScene(new GameScene(m_app));
 
+        packet.clear();
+        packet << PacketType::GetMap;
+        m_app.sendToServer(packet);
+
         return;
     }
 

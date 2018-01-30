@@ -37,7 +37,7 @@ public:
 
     const sf::Font& getFont(FontType type);
 
-	std::map<TileType, Tile> tileAtlas;
+    std::map<TileType::Type, Tile> tileAtlas;
 
     void sendToServer(sf::Packet& packet);
     void connectToServer();

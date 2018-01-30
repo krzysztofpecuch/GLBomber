@@ -13,9 +13,10 @@ public:
     void update(float deltaTime) override;
     void handleInput(sf::Keyboard::Key keyCode) override;
 
+    void setMap(const std::vector<int> &map);
+
 private:
 	std::vector<Tile> tiles;
-
 };
 
 #endif // GAMESCENE_H

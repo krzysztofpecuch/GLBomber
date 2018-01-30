@@ -5,6 +5,7 @@
 
 Server::Server()
 {
+
 }
 
 Server::~Server()
@@ -25,6 +26,8 @@ Server::~Server()
 void Server::run()
 {
     std::cout << "Server has IP: " << sf::IpAddress::getLocalAddress() << std::endl;
+
+    generateMap();
 
     m_listener.listen(PORT);
 
@@ -123,8 +126,42 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                 break;
             }
 
-            default:
+            case PacketType::GetMap:
+            {
+                packet.clear();
+                packet << PacketType::GetMap;
+
+                for (int row = 0; row < MAP_HEIGHT; ++row)
+                {
+                    for (int col = 0; col < MAP_WIDTH; ++col)
+                    {
+                        packet << m_gameData.map[row][col];
+                    }
+                }
+
+//                for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i)
+//                {
+//                    int tile;
+//                    packet >> tile;
+
+//                    std::cout << tile << " ";
+//                }
+
+                client->send(packet);
+
                 break;
+            }
+
+            default:
+                break;std::vector<int> map;
+
+                for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i)
+                {
+                    int tile;
+                    packet >> tile;
+
+                    map.push_back(tile);
+                }
 
             }
         }
@@ -167,4 +204,39 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
         }
 
     }
+}
+
+void Server::generateMap()
+{
+    for (int row = 0; row < MAP_HEIGHT; ++row)
+    {
+        for (int col = 0; col < MAP_WIDTH; ++col)
+        {
+            if (row == 0 || row == MAP_HEIGHT - 1 || col == 0 || col == MAP_WIDTH - 1) // fill borders
+            {
+                m_gameData.map[row][col] = TileType::SolidTile;
+                continue;
+            }
+
+            if (row % 2 == 0 && col % 2 == 0)
+            {
+                m_gameData.map[row][col] = TileType::SolidTile;
+                continue;
+            }
+        }
+    }
+
+    std::cout << "Map:" << std::endl << std::endl;
+
+    for (int row = 0; row < MAP_HEIGHT; ++row)
+    {
+        for (int col = 0; col < MAP_WIDTH; ++col)
+        {
+            std::cout << m_gameData.map[row][col];
+        }
+
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
 }
