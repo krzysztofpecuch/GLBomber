@@ -66,35 +66,66 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
             switch (type)
             {
 
+            case PacketType::UpdateSkins:
+            {
+                packet.clear();
+                packet << PacketType::UpdateSkins << m_gameData.disabledSkins;
+
+                client->send(packet);
+
+                int type;
+                int size;
+
+                packet >> type;
+
+                std::cout << "Data sent. Type: " << type << std::endl;
+
+                break;
+            }
+
             case PacketType::PlayerInitialData:
             {
                 SharedData::Player data;
-
                 packet >> data;
-
-                // process data
-
                 packet.clear();
 
-                packet << PacketType::SkinChoosed << data.skin;
+                m_gameData.players[clientID] = data;
+                m_gameData.disabledSkins.push_back(data.skin);
+
+                packet << PacketType::UpdateSkins << m_gameData.disabledSkins;
 
                 for (const auto& client : m_clients)
                 {
                     client.second->send(packet);
                 }
 
-                m_gameData.disabledSkins.push_back(data.skin);
-
                 break;
             }
 
-            case PacketType::DisabledSkinsRequest:
+            case PacketType::PlayerLeftGame:
             {
+                std::cout << "Player has left the game" << std::endl;
                 packet.clear();
 
-                packet << PacketType::DisabledSkinsRequest << m_gameData.disabledSkins;
+                if (m_gameData.disabledSkins.size() > 0)
+                {
+                    m_gameData.disabledSkins.erase([this](int id) -> std::vector<int>::iterator
+                    {
+                        for (auto it = m_gameData.disabledSkins.begin(); it != m_gameData.disabledSkins.end(); ++it)
+                            if (*it == m_gameData.players[id].skin)
+                                return it;
 
-                client->send(packet);
+                        return m_gameData.disabledSkins.end();
+                    }(clientID));
+                }
+
+                m_gameData.players.erase(m_gameData.players.find(clientID));
+
+                sf::Packet packet;
+                packet << PacketType::UpdateSkins << m_gameData.disabledSkins;
+
+                for (const auto& client : m_clients)
+                    client.second->send(packet);
 
                 break;
             }
@@ -108,11 +139,31 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
         {
             std::cout << "Client disconnected from server." << std::endl;
 
+            if (m_gameData.disabledSkins.size() > 0)
+            {
+                m_gameData.disabledSkins.erase([this](int id) -> std::vector<int>::iterator
+                {
+                    for (auto it = m_gameData.disabledSkins.begin(); it != m_gameData.disabledSkins.end(); ++it)
+                        if (*it == m_gameData.players[id].skin)
+                            return it;
+
+                    return m_gameData.disabledSkins.end();
+                }(clientID));
+            }
+
+            m_gameData.players.erase(m_gameData.players.find(clientID));
+
             delete m_clients[clientID];
             m_clients.erase(m_clients.find(clientID));
 
             delete m_clientsThreads[clientID];
             m_clientsThreads.erase(m_clientsThreads.find(clientID));
+
+            sf::Packet packet;
+            packet << PacketType::UpdateSkins << m_gameData.disabledSkins;
+
+            for (const auto& client : m_clients)
+                client.second->send(packet);
 
             m_idToGrant--;
 

@@ -7,19 +7,7 @@
 
 Socket::Socket(Application &application) : m_app(application)
 {
-    std::thread connectingThread([this]()
-    {
-        if (m_socket.connect(sf::IpAddress::getLocalAddress(), PORT) != sf::Socket::Done)
-        {
-            std::cout << "Cannot connect to server!" << std::endl;
-        }
 
-    });
-
-    connectingThread.detach();
-
-    receivingThread = new std::thread(&Socket::receive, this);
-    receivingThread->detach();
 }
 
 Socket::~Socket()

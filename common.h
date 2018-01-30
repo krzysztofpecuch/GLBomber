@@ -15,8 +15,8 @@ namespace PacketType
 enum Type
 {
     PlayerInitialData,
-    SkinChoosed,
-    DisabledSkinsRequest
+    UpdateSkins,
+    PlayerLeftGame
 };
 
 }

@@ -10,6 +10,8 @@ Application::Application() :
 {
     window.setFramerateLimit(60);
 
+    m_socket.connect();
+
     loadTextures();
 	loadTiles();
     loadFonts();

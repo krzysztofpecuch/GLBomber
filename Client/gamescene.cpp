@@ -22,7 +22,9 @@ GameScene::GameScene(Application &application) :
 
 GameScene::~GameScene()
 {
-    m_app.disconnectFromServer();
+    sf::Packet packet;
+    packet << PacketType::PlayerLeftGame;
+    m_app.sendToServer(packet);
 }
 
 

@@ -2,14 +2,15 @@
 #define GAMEDATA_H
 
 #include <vector>
+#include <map>
 #include <string>
 
 #include "common.h"
 
 struct GameData
 {
+    std::map<int, SharedData::Player> players;
     std::vector<int> disabledSkins;
-    std::vector<SharedData::Player> players;
 };
 
 #endif // GAMEDATA_H
