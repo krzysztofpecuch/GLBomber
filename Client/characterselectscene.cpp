@@ -85,7 +85,26 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
         if (m_currentOptionIndex == 0)
             return;
 
-        m_currentOptionIndex--;
+        if (m_disabledSkins.size() == 0)
+        {
+            m_currentOptionIndex--;
+            break;
+        }
+
+        for (int i = m_currentOptionIndex - 1; i >= 0; --i)
+        {
+            bool found = false;
+
+            if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), i) == m_disabledSkins.end())
+            {
+                m_currentOptionIndex = i;
+                found = true;
+                break;
+            }
+
+            if (found)
+                break;
+        }
 
         break;
     }
@@ -95,7 +114,26 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
         if (m_currentOptionIndex == m_skins.size() - 1)
             return;
 
-        m_currentOptionIndex++;
+        if (m_disabledSkins.size() == 0)
+        {
+            m_currentOptionIndex++;
+            break;
+        }
+
+        for (unsigned i = m_currentOptionIndex + 1; i < m_skins.size(); ++i)
+        {
+            bool found = false;
+
+            if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), i) == m_disabledSkins.end())
+            {
+                m_currentOptionIndex = i;
+                found = true;
+                break;
+            }
+
+            if (found)
+                break;
+        }
 
         break;
     }
@@ -156,8 +194,30 @@ void CharacterSelectScene::captureTextEntered(char character)
 void CharacterSelectScene::updateSkins(const std::vector<int> &skins)
 {
     m_disabledSkins = skins;
+    std::sort(m_disabledSkins.begin(), m_disabledSkins.end());
 
-    for (int i = 0; i < m_skins.size(); ++i)
+    if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), m_currentOptionIndex) != m_disabledSkins.end())
+    {
+        for (unsigned i = 0; i < m_skins.size(); ++i)
+        {
+            bool found = false;
+
+            if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), i) == m_disabledSkins.end())
+            {
+                m_currentOptionIndex = i;
+                found = true;
+                m_pointer.setPosition(m_skins[m_currentOptionIndex].getPosition().x + m_skins[m_currentOptionIndex].getGlobalBounds().width / 2 - m_pointer.getGlobalBounds().width / 2,
+                                      m_skins[m_currentOptionIndex].getPosition().y + 10);
+                break;
+            }
+
+            if (found)
+                break;
+        }
+    }
+
+
+    for (unsigned i = 0; i < m_skins.size(); ++i)
     {
         if (std::find(m_disabledSkins.begin(), m_disabledSkins.end(), i) != m_disabledSkins.end())
             m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::SkinGray));
@@ -165,6 +225,8 @@ void CharacterSelectScene::updateSkins(const std::vector<int> &skins)
         else
             m_skins[i].setTexture(m_app.textureManager.getRef(TextureType::Skin1));
     }
+
+
 }
 
 void CharacterSelectScene::updateSkinsRequest()
