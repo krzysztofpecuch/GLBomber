@@ -2,10 +2,11 @@
 #include "common.h"
 
 #include <iostream>
+#include <ctime>
 
 Server::Server()
 {
-
+    srand(time(nullptr));
 }
 
 Server::~Server()
@@ -208,23 +209,57 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
 
 void Server::generateMap()
 {
+    std::vector<sf::Vector2i> emptyTiles;
+
     for (int row = 0; row < MAP_HEIGHT; ++row)
     {
         for (int col = 0; col < MAP_WIDTH; ++col)
         {
-            if (row == 0 || row == MAP_HEIGHT - 1 || col == 0 || col == MAP_WIDTH - 1) // fill borders
+            // fill borders with solid blocks
+            if (row == 0 || row == MAP_HEIGHT - 1 || col == 0 || col == MAP_WIDTH - 1)
             {
                 m_gameData.map[row][col] = TileType::SolidTile;
                 continue;
             }
 
+            // set solid blocks inside map
             if (row % 2 == 0 && col % 2 == 0)
             {
                 m_gameData.map[row][col] = TileType::SolidTile;
                 continue;
             }
+
+            // now find positions, where soft blocks can be generated
+
+            // skip tiles in players initial position neihgbourhood
+            if (row == 1 || row == MAP_HEIGHT - 2)
+            {
+                if (col == 1 || col == 2 || col == MAP_WIDTH - 2 || col == MAP_WIDTH - 3)
+                    continue;
+            }
+
+            if (row == 2 || row == MAP_HEIGHT - 3)
+            {
+                if (col == 1 || col == MAP_WIDTH - 2)
+                    continue;
+            }
+
+            emptyTiles.push_back(sf::Vector2i(col, row));
         }
     }
+
+    const int tilesToGenerate = 60;
+
+    for (int i = 0; i < tilesToGenerate; ++i)
+    {
+        int index = rand() % (emptyTiles.size() - 1);
+        sf::Vector2i pos = emptyTiles[index];
+
+        m_gameData.map[pos.y][pos.x] = TileType::SoftTile;
+
+        emptyTiles.erase(std::find(emptyTiles.begin(), emptyTiles.end(), pos));
+    }
+
 
     std::cout << "Map:" << std::endl << std::endl;
 

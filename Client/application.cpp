@@ -46,6 +46,7 @@ void Application::loadTiles()
 {
 //    tileAtlas[TileType::SoftTile] = Tile(1, textureManager, { Animation(0, 4, 0.5f), Animation(0, 4, 0.5f), Animation(0, 4, 0.5f) }, TileType::SoftTile);
     tileAtlas[TileType::SolidTile] = Tile(1, textureManager, { Animation(0, 0, 1.f) }, TileType::SolidTile);
+    tileAtlas[TileType::SoftTile] = Tile(1, textureManager, { Animation(0, 0, 1.f) }, TileType::SoftTile);
 	tileAtlas[TileType::EmptyTile] = Tile(1, textureManager, { Animation(0, 0, 1.f) }, TileType::EmptyTile);
 }
 
