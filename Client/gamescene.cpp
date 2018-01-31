@@ -4,9 +4,9 @@
 GameScene::GameScene(Application &application) :
 	IScene(application)
 {
-//    sf::Packet packet;
-//    packet << PacketType::GetMap;
-//    m_app.sendToServer(packet);
+    sf::Packet packet;
+    packet << PacketType::GetMap;
+    m_app.sendToServer(packet);
 
 //    for (int i = 0; i < MAP_WIDTH * MAP_HEIGHT; i++)
 //	{
