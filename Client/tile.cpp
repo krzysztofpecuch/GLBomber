@@ -14,10 +14,10 @@ Tile::Tile(const unsigned int height, TextureManager& textureManager, const std:
 
 	m_tileVariant = 0;
 	
-	sprite.setOrigin(sf::Vector2f(0.0f, tileSize*(height - 1)));
+    sprite.setOrigin(sf::Vector2f(0.0f, TILE_SIZE*(height - 1)));
 	sprite.setTexture(textureManager.getRef(tileToTexture(tileType)));
 
-	animationHandler.frameSize = sf::IntRect(0, 0, tileSize, tileSize*height);
+    animationHandler.frameSize = sf::IntRect(0, 0, TILE_SIZE, TILE_SIZE*height);
 	
 	for (auto animation : animations)
 	{
@@ -40,6 +40,7 @@ void Tile::draw(sf::RenderWindow &window, float dt)
 	sprite.setTextureRect(animationHandler.bounds);
 
 	window.draw(sprite);
+
 // to jest przykład odpalania animacji niszczenia bloku
 //	if (animationHandler.animationEnded())
 //	{
@@ -50,6 +51,7 @@ void Tile::draw(sf::RenderWindow &window, float dt)
 //			animationHandler.addAnimation(Animation(0, 0, 1.f));
 //		}
 //	}
+
 }
 
 void Tile::update() {

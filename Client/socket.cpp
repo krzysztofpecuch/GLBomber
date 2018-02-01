@@ -3,6 +3,7 @@
 #include "application.h"
 #include "characterselectscene.h"
 #include "gamescene.h"
+#include "player.h"
 
 #include <iostream>
 
@@ -112,6 +113,32 @@ void Socket::receive()
                 break;
 
             scene->setMap(map);
+
+            break;
+        }
+
+        case PacketType::PlayerData:
+        {
+            int id;
+            SharedData::Player playerInfo;
+
+            packet >> id >> playerInfo;
+
+            GameScene* scene = dynamic_cast<GameScene*>(m_app.getCurrentScene());
+            if (!scene)
+                break;
+
+            std::map<int, TextureType> skinToTexture
+            {
+                { SkinType::Skin1, TextureType::Player1 },
+                { SkinType::Skin2, TextureType::Player1 },
+                { SkinType::Skin3, TextureType::Player1 },
+                { SkinType::Skin4, TextureType::Player1 },
+            };
+
+            Player player(m_app.textureManager.getRef(skinToTexture[playerInfo.skin]), playerInfo.nickname, playerInfo.position);
+
+            scene->addPlayer(id, player);
 
             break;
         }

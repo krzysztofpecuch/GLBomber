@@ -40,6 +40,7 @@ void Application::loadTextures()
 	textureManager.loadTexture(TextureType::Skin3, "media/skin1.png");
 	textureManager.loadTexture(TextureType::Skin4, "media/skin1.png");
 	textureManager.loadTexture(TextureType::SkinGray, "media/skin_gray.png");
+    textureManager.loadTexture(TextureType::Player1, "media/player.png");
 }
 
 void Application::loadTiles()

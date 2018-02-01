@@ -9,7 +9,8 @@
 #include <map>
 #include <string>
 
-enum class TextureType {
+enum class TextureType
+{
     Background,
     SolidTile,
     SoftTile,
@@ -23,10 +24,9 @@ enum class TextureType {
     Skin3,
     Skin4,
     SkinGray,
+    Player1,
     Error
 };
-
-#define tileSize 62
 
 class TextureManager
 {

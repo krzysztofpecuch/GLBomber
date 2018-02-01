@@ -31,14 +31,15 @@ public:
 
 	sf::IntRect frameSize;
 	sf::IntRect bounds;
+
 private:
-	int m_frame;
-	bool m_freezeFrame;
-	bool m_endOfAnimation;
-	bool m_looped;
-	std::vector<Animation> m_animations;
-	float m_timeCount;
-	int m_currentAnimation;
+    int                     m_frame;
+    bool                    m_freezeFrame;
+    bool                    m_endOfAnimation;
+    bool                    m_looped;
+    std::vector<Animation>  m_animations;
+    float                   m_timeCount;
+    int                     m_currentAnimation;
 };
 
 #endif // !ANIMATIONHANDLER_H

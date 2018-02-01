@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "textureManager.h"
+#include "texturemanager.h"
 #include "animationhandler.h"
 #include "tile.h"
 #include "socket.h"
@@ -25,30 +25,30 @@ public:
     Application();
     ~Application();
 
-    sf::RenderWindow window;
-	TextureManager textureManager;
+    sf::RenderWindow                window;
+    TextureManager                  textureManager;
+    std::map<TileType::Type, Tile>  tileAtlas;
 
     void run();
 
-    void pushScene(IScene* scene);
-    void popScene();
-    void changeCurrentScene(IScene* scene);
-    IScene* getCurrentScene() const;
-
     const sf::Font& getFont(FontType type);
 
-    std::map<TileType::Type, Tile> tileAtlas;
+    void    pushScene(IScene* scene);
+    void    popScene();
+    void    changeCurrentScene(IScene* scene);
+    IScene* getCurrentScene() const;
+
+
 
     void sendToServer(sf::Packet& packet);
     void connectToServer();
     void disconnectFromServer();
 
 private:
-    std::stack<IScene*> m_scenes;
-    std::map<FontType, sf::Font> m_fonts;
-    sf::Event m_event;
-
-    Socket m_socket;
+    std::stack<IScene*>             m_scenes;
+    std::map<FontType, sf::Font>    m_fonts;
+    sf::Event                       m_event;
+    Socket                          m_socket;
 
 	void loadTextures();
 	void loadTiles();

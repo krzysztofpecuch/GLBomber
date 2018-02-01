@@ -30,6 +30,11 @@ private:
     void receiveData(int clientID, sf::TcpSocket* client);
 
     void generateMap();
+
+    sf::Vector2f tileToPixelPosition(const sf::Vector2i& position)
+    {
+        return sf::Vector2f(position * TILE_SIZE);
+    }
 };
 
 #endif // SERVER_H

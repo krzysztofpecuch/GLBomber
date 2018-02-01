@@ -12,12 +12,14 @@
 #define MAP_WIDTH 13
 #define MAP_HEIGHT 13
 
+#define TILE_SIZE 62
+
 namespace PacketType
 {
 
 enum Type
 {
-    PlayerInitialData,
+    PlayerData,
     UpdateSkins,
     PlayerLeftGame,
     GetMap
@@ -37,18 +39,31 @@ enum Type
 
 }
 
+namespace SkinType
+{
+
+enum Type
+{
+    Skin1,
+    Skin2,
+    Skin3,
+    Skin4
+};
+
+}
 
 namespace SharedData
 {
 
 struct Player
 {
-    std::string nickname;
-    int skin;
+    std::string     nickname = "";
+    int             skin = 0;
+//    SkinType::Type  skin = SkinType::Skin1;
+    sf::Vector2f    position = {};
 };
 
 }
-
 
 #endif // COMMON_H
 

@@ -5,12 +5,12 @@
 
 sf::Packet& operator<< (sf::Packet& packet, const SharedData::Player& data)
 {
-    return packet << data.nickname << data.skin;
+    return packet << data.nickname << data.skin << data.position.x << data.position.y;
 }
 
 sf::Packet& operator>> (sf::Packet& packet, SharedData::Player& data)
 {
-    return packet >> data.nickname >> data.skin;
+    return packet >> data.nickname >> data.skin >> data.position.x >> data.position.y;
 }
 
 sf::Packet& operator<< (sf::Packet& packet, const std::vector<int>& data)

@@ -4,6 +4,9 @@
 #include <iostream>
 #include <ctime>
 
+const sf::Vector2i initialPlayersTilePositions[] = { {1, 1}, {11, 1}, {1, 11}, {11, 11} };
+
+
 Server::Server()
 {
     srand(time(nullptr));
@@ -38,11 +41,11 @@ void Server::run()
 
         if (m_listener.accept(*client) == sf::Socket::Done)
         {
-            std::cout << "New client connected to server!" << std::endl;
 
             m_clients[m_idToGrant] = client;
             m_clientsThreads[m_idToGrant] = new std::thread(&Server::receiveData, this, m_idToGrant, client);
             m_clientsThreads[m_idToGrant]->detach();
+            std::cout << "New client with id " << m_idToGrant << " connected to server!" << std::endl;
             m_idToGrant++;
         }
         else
@@ -80,15 +83,23 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                 break;
             }
 
-            case PacketType::PlayerInitialData:
+            case PacketType::PlayerData:
             {
-                SharedData::Player data;
-                packet >> data;
+                SharedData::Player player;
+                packet >> player;
+                player.position = tileToPixelPosition(initialPlayersTilePositions[clientID]);
+                m_gameData.players[clientID] = player;
+                m_gameData.disabledSkins.push_back(player.skin);
+
                 packet.clear();
+                packet << PacketType::PlayerData << clientID << player;
 
-                m_gameData.players[clientID] = data;
-                m_gameData.disabledSkins.push_back(data.skin);
+                for (const auto& client : m_clients)
+                {
+                    client.second->send(packet);
+                }
 
+                packet.clear();
                 packet << PacketType::UpdateSkins << m_gameData.disabledSkins;
 
                 for (const auto& client : m_clients)
@@ -140,30 +151,13 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                     }
                 }
 
-//                for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i)
-//                {
-//                    int tile;
-//                    packet >> tile;
-
-//                    std::cout << tile << " ";
-//                }
-
                 client->send(packet);
 
                 break;
             }
 
             default:
-                break;std::vector<int> map;
-
-                for (int i = 0; i < MAP_HEIGHT * MAP_WIDTH; ++i)
-                {
-                    int tile;
-                    packet >> tile;
-
-                    map.push_back(tile);
-                }
-
+                break;
             }
         }
         else if (status == sf::Socket::Disconnected)
