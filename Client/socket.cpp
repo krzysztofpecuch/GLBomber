@@ -117,7 +117,30 @@ void Socket::receive()
             break;
         }
 
-        case PacketType::PlayerData:
+        case PacketType::GetPlayers:
+        {
+
+            int size;
+            std::vector<SharedData::Player> playersInfo;
+
+            packet >> size;
+
+            GameScene* scene = dynamic_cast<GameScene*>(m_app.getCurrentScene());
+            if (!scene)
+                break;
+
+            for (int i = 0; i < size; ++i)
+            {
+                SharedData::Player playerInfo;
+                packet >> playerInfo;
+
+                scene->addPlayer(i, Player(m_app.textureManager.getRef(m_app.textureManager.skinToTexture.at(playerInfo.skin)), playerInfo.nickname, playerInfo.position));
+            }
+
+            break;
+        }
+
+        case PacketType::AddPlayer:
         {
             int id;
             SharedData::Player playerInfo;
@@ -128,15 +151,7 @@ void Socket::receive()
             if (!scene)
                 break;
 
-            std::map<int, TextureType> skinToTexture
-            {
-                { SkinType::Skin1, TextureType::Player1 },
-                { SkinType::Skin2, TextureType::Player1 },
-                { SkinType::Skin3, TextureType::Player1 },
-                { SkinType::Skin4, TextureType::Player1 },
-            };
-
-            Player player(m_app.textureManager.getRef(skinToTexture[playerInfo.skin]), playerInfo.nickname, playerInfo.position);
+            Player player(m_app.textureManager.getRef(m_app.textureManager.skinToTexture.at(playerInfo.skin)), playerInfo.nickname, playerInfo.position);
 
             scene->addPlayer(id, player);
 

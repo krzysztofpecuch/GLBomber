@@ -13,3 +13,4 @@ void Player::draw(sf::RenderTarget &target, sf::RenderStates) const
 {
     target.draw(m_sprite);
 }
+

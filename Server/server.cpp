@@ -83,7 +83,7 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                 break;
             }
 
-            case PacketType::PlayerData:
+            case PacketType::AddPlayer:
             {
                 SharedData::Player player;
                 packet >> player;
@@ -92,7 +92,7 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                 m_gameData.disabledSkins.push_back(player.skin);
 
                 packet.clear();
-                packet << PacketType::PlayerData << clientID << player;
+                packet << PacketType::AddPlayer << clientID << player;
 
                 for (const auto& client : m_clients)
                 {
@@ -152,6 +152,27 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                 }
 
                 client->send(packet);
+
+                break;
+            }
+
+            case PacketType::GetPlayers:
+            {
+                packet.clear();
+                packet << PacketType::GetPlayers;
+                packet << m_gameData.players.size();
+
+                for (const auto& player : m_gameData.players)
+                {
+                    packet << player.second;
+                }
+
+                client->send(packet);
+
+                for (const auto& client : m_clients)
+                {
+                    client.second->send(packet);
+                }
 
                 break;
             }

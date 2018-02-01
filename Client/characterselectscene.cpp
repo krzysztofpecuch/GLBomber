@@ -146,7 +146,7 @@ void CharacterSelectScene::handleInput(sf::Keyboard::Key keyCode)
         data.nickname = m_nicknameHolder.getString().toAnsiString();
         data.skin = m_currentOptionIndex;
 
-        packet << PacketType::PlayerData << data;
+        packet << PacketType::AddPlayer << data;
 
         m_app.sendToServer(packet);
 

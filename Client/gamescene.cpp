@@ -8,6 +8,10 @@ GameScene::GameScene(Application &application) :
     packet << PacketType::GetMap;
     m_app.sendToServer(packet);
 
+    packet.clear();
+    packet << PacketType::GetPlayers;
+    m_app.sendToServer(packet);
+
     //    for (int i = 0; i < MAP_WIDTH * MAP_HEIGHT; i++)
     //	{
     //        if (i < MAP_WIDTH)

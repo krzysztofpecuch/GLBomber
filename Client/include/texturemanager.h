@@ -33,6 +33,14 @@ class TextureManager
 public:
 	TextureManager();
 
+    const std::map<int, TextureType> skinToTexture
+    {
+        { SkinType::Skin1, TextureType::Player1 },
+        { SkinType::Skin2, TextureType::Player1 },
+        { SkinType::Skin3, TextureType::Player1 },
+        { SkinType::Skin4, TextureType::Player1 },
+    };
+
 	void loadTexture(const TextureType &type, const std::string &filename);
 	sf::Texture& getRef(const TextureType &type);
 
