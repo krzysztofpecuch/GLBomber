@@ -18,6 +18,7 @@ public:
 
     void addPlayer(int id, const Player& player);
     void updatePlayer(int id, const sf::Vector2f& position);
+    void removePlayer(int id);
 
 private:
     std::vector<Tile> m_tiles;

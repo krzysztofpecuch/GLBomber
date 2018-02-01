@@ -19,11 +19,12 @@ namespace PacketType
 
 enum Type
 {
-    AddPlayer,
     UpdateSkins,
     PlayerLeftGame,
     GetMap,
-    GetPlayers
+    GetPlayers,
+    AddPlayer,
+    RemovePlayer
 };
 
 }

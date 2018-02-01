@@ -112,7 +112,7 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
 
             case PacketType::PlayerLeftGame:
             {
-                std::cout << "Player has left the game" << std::endl;
+                std::cout << "Player " << clientID << " has left the game" << std::endl;
                 packet.clear();
 
                 if (m_gameData.disabledSkins.size() > 0)
@@ -127,13 +127,19 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
                     }(clientID));
                 }
 
-                m_gameData.players.erase(m_gameData.players.find(clientID));
+                m_gameData.players.erase(clientID);
 
                 sf::Packet packet;
                 packet << PacketType::UpdateSkins << m_gameData.disabledSkins;
 
+                sf::Packet removePacket;
+                removePacket << PacketType::RemovePlayer << clientID;
+
                 for (const auto& client : m_clients)
+                {
                     client.second->send(packet);
+                    client.second->send(removePacket);
+                }
 
                 break;
             }
@@ -211,8 +217,14 @@ void Server::receiveData(int clientID, sf::TcpSocket *client)
             sf::Packet packet;
             packet << PacketType::UpdateSkins << m_gameData.disabledSkins;
 
+            sf::Packet removePacket;
+            removePacket << PacketType::RemovePlayer << clientID;
+
             for (const auto& client : m_clients)
+            {
                 client.second->send(packet);
+                client.second->send(removePacket);
+            }
 
             m_idToGrant--;
 

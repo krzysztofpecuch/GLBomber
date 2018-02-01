@@ -98,3 +98,8 @@ void GameScene::updatePlayer(int id, const sf::Vector2f &position)
 {
 
 }
+
+void GameScene::removePlayer(int id)
+{
+    m_players.erase(id);
+}

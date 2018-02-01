@@ -158,6 +158,21 @@ void Socket::receive()
             break;
         }
 
+        case PacketType::RemovePlayer:
+        {
+            int id;
+
+            packet >> id;
+
+            GameScene* scene = dynamic_cast<GameScene*>(m_app.getCurrentScene());
+            if (!scene)
+                break;
+
+            scene->removePlayer(id);
+
+            break;
+        }
+
         default:
             break;
         }
